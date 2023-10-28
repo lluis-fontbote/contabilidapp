@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./symfony-app:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - php
+      - db
+
+  php:
+    build: ./
+    volumes:
+      - ./symfony-app:/var/www/html
+    depends_on:
+      - db
+    links:
+      - db
+    command: ["php-fpm", "--allow-to-run-as-root"]
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_db_user
+      MYSQL_PASSWORD: your_db_password
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./symfony-app:/app
+    command: ["tail", "-f", "/dev/null"] # Keeps the container running
+
+volumes:
+  symfony-app:
+
+networks:
+  default:
+    driver: bridge
