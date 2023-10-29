@@ -22,6 +22,47 @@
                 </ol>
             </nav>
         </div>
+        <div class="card card--filtres">
+            <div class="card-content collapse show">
+                <form action="{{ path('provider.index') }}">
+                    <div class="card-body mt-2">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-1">
+                                    <label class="form-label" for="name">Por nombre</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Filtrar por nombre" value="{{ app.request.get('name') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-1">
+                                    <label class="form-label" for="providerType">Tipo de proveedor</label>
+                                    <select class="form-select" name="providerType">
+                                        <option value="">Todos</option>
+                                        {% for providerType in providerTypes %}
+                                            <option value="{{ providerType.id }}" {% if app.request.get('providerType') == providerType.id %} selected{% endif %}>{{ providerType.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="">
+                                    <label class="form-label" for="active">Activo</label>
+                                    <select class="form-select" id="active" name="active">
+                                        <option value="">Todos</option>
+                                        <option value="1" {% if app.request.get('active') == '1' %} selected{% endif %}>Si</option>
+                                        <option value="0" {% if app.request.get('active') == '0' %} selected{% endif %}>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 d-flex align-items-end">
+                                <button class="btn btn-dark w-100 mb-1">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
@@ -58,25 +99,20 @@
                                                 <td>{{ provider.updated_at }}</td>
                                                 <td class="text-end">
                                                     <div class="dropdown">
-                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown" id="dropdownMenuButton{{ provider.id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            <i data-feather="more-vertical"></i>
-                                                        </button>
+                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown" id="dropdownMenuButton{{ provider.id }}" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ provider.id }}">
                                                             <li>
                                                                 <a class="toggle-status dropdown-item" data-id="{{ provider.id }}" data-action="{{ path('provider.toggle_status', {id: provider.id}) }}" href="javascript:void(0);">
-                                                                    <i data-feather="eye" class="me-50"></i>
                                                                     <span>Cambiar estado</span>
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a class="dropdown-item" href="{{ path('provider.edit', {id: provider.id}) }}">
-                                                                    <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Editar</span>
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a class="delete-record dropdown-item" href="#" data-id="{{ provider.id }}" data-action="{{ path('provider.delete', {id: provider.id}) }}">
-                                                                    <i data-feather="trash" class="me-50"></i>
                                                                     <span>Eliminar</span>
                                                                 </a>
                                                             </li>

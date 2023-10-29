@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Provider;
+use App\Entity\ProviderType;
 use App\Form\ProviderFormType;
 use App\Repository\ProviderRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -23,8 +24,27 @@ class ProviderController extends AbstractController
      */
     public function index(ProviderRepository $providerRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $nameFilter = $request->query->get('name');
+        $activeFilter = $request->query->get('active');
+        $providerTypeFilter = $request->query->get('providerType');
+
         $queryBuilder = $providerRepository->createQueryBuilder('p')
             ->leftJoin('p.providerType', 'pt');
+
+        if ($nameFilter) {
+            $queryBuilder->andWhere('p.name LIKE :name')
+                ->setParameter('name', '%' . $nameFilter . '%');
+        }
+    
+        if ($activeFilter !== '') {
+            $queryBuilder->andWhere('p.active = :active')
+                ->setParameter('active', $activeFilter);
+        }
+    
+        if ($providerTypeFilter) {
+            $queryBuilder->andWhere('pt.id = :providerType')
+                ->setParameter('providerType', $providerTypeFilter);
+        }
 
         $providers = $paginator->paginate(
             $queryBuilder,
@@ -32,8 +52,11 @@ class ProviderController extends AbstractController
             10
         );
 
+        $providerTypes = $this->getDoctrine()->getRepository(ProviderType::class)->findAll();
+
         return $this->render('provider/index.html.twig', [
             'providers' => $providers,
+            'providerTypes' => $providerTypes,
         ]);
     }
 
