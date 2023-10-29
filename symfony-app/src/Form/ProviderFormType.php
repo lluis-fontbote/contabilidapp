@@ -19,24 +19,24 @@ class ProviderFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nombre',
+                'label' => 'Nombre*',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Nombre',
+                    'placeholder' => 'Nombre*',
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Correo',
+                'label' => 'Correo*',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Correo',
+                    'placeholder' => 'Correo*',
                 ],
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Teléfono',
+                'label' => 'Teléfono*',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Teléfono',
+                    'placeholder' => 'Teléfono*',
                 ],
             ])
             ->add('active', CheckboxType::class, [
@@ -50,10 +50,10 @@ class ProviderFormType extends AbstractType
                 ],
             ])
             ->add('providerType', EntityType::class, [                
-                'label' => 'Tipo',
+                'label' => 'Tipo*',
                 'attr' => [
                     'class' => 'form-select',
-                    'aria-label' => 'State',
+                    'aria-label' => 'Tipo*',
                 ],
                 'class' => ProviderType::class,
                 'choice_label' => 'name',

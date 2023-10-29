@@ -38,6 +38,7 @@
         {% block body %}
             {{ include('partials/_header.html.twig') }}
             {{ include('partials/_sidebar.html.twig') }}
+
             {% block content %}{% endblock %}
 
             {{ include('partials/_footer.html.twig') }}
@@ -66,7 +67,11 @@
                     $(document).ready(function() {
                         {% for label, messages in app.flashes() %}
                             {% for message in messages %}
-                                toastr.success("{{ message }}", "OK", {closeButton: true});
+                                {% if (label == 'success') %}
+                                    toastr.success("{{ message }}", "OK", {closeButton: true});
+                                {% else %}
+                                    toastr.error("{{ message }}", "Error al guardar", {closeButton: true});
+                                {% endif %}
                             {% endfor %}
                         {% endfor %}
                     });

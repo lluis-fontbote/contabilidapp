@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\ProviderRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProviderRepository")
  * @ORM\Table(name="providers")
+ * @UniqueEntity("email", message="El correo ya está asignado a un proveedor.")
  */
 class Provider 
 {
@@ -25,6 +28,7 @@ class Provider
      * @var string
      * 
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -32,6 +36,8 @@ class Provider
      * @var string
      * 
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Email
      */
     private $email;
 
@@ -39,6 +45,7 @@ class Provider
      * @var string
      * 
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
      */
     private $phone;
 
@@ -64,6 +71,7 @@ class Provider
     /**
      * @ORM\ManyToOne(targetEntity=ProviderType::class, inversedBy="providers")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $providerType;
 
@@ -77,7 +85,7 @@ class Provider
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -89,7 +97,7 @@ class Provider
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -101,7 +109,7 @@ class Provider
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 

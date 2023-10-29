@@ -24,17 +24,22 @@ class ProviderController extends AbstractController
         $form = $this->createForm(ProviderFormType::class, $provider);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // refresh CSRF token to prevent duplicates on users submitting the form twice
-            $this->get("security.csrf.token_manager")->refreshToken("form_intention");
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                $this->addFlash('error', 'Revisa los campos del formulario.');
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($provider);
-            $em->flush();
-
-            $this->addFlash('success', 'Proveedor creado correctamente');
-
-            return $this->redirectToRoute('provider.edit', ['id' => $provider->getId()]);
+            } else {
+                // refresh CSRF token to prevent duplicates on users submitting the form twice
+                $this->get("security.csrf.token_manager")->refreshToken("form_intention");
+    
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($provider);
+                $em->flush();
+    
+                $this->addFlash('success', 'Proveedor creado correctamente');
+    
+                return $this->redirectToRoute('provider.edit', ['id' => $provider->getId()]);
+            }
         }
 
         return $this->render('provider/form.html.twig', [

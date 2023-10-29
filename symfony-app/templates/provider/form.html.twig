@@ -39,30 +39,67 @@
                                     <div class="form-check form-switch">
                                         {{ form_widget(form.active) }}
                                         {{ form_label(form.active) }}
+                                        {% if not form.active.vars.valid %}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(form.active) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        {{ form_widget(form.name) }}
-                                        {{ form_label(form.name) }}
+                                        {% if form.name.vars.valid %}
+                                            {{ form_widget(form.name) }}
+                                            {{ form_label(form.name) }}
+                                        {% else %}
+                                            {{ form_widget(form.name, { 'attr': { 'class': 'form-control is-invalid' } }) }}
+                                            {{ form_label(form.name) }}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(form.name) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        {{ form_widget(form.providerType) }}
-                                        {{ form_label(form.providerType) }}
+                                        {% if form.providerType.vars.valid %}
+                                            {{ form_widget(form.providerType) }}
+                                            {{ form_label(form.providerType) }}
+                                        {% else %}
+                                            {{ form_widget(form.providerType, { 'attr': { 'class': 'form-select is-invalid' } }) }}
+                                            {{ form_label(form.providerType) }}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(form.providerType) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        {{ form_widget(form.email) }}
-                                        {{ form_label(form.email) }}
+                                        {% if form.email.vars.valid %}
+                                            {{ form_widget(form.email) }}
+                                            {{ form_label(form.email) }}
+                                        {% else %}
+                                            {{ form_widget(form.email, { 'attr': { 'class': 'form-control is-invalid', 'type': 'email' } }) }}
+                                            {{ form_label(form.email) }}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(form.email) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        {{ form_widget(form.phone) }}
-                                        {{ form_label(form.phone) }}
+                                        {% if form.phone.vars.valid %}
+                                            {{ form_widget(form.phone) }}
+                                            {{ form_label(form.phone) }}
+                                        {% else %}
+                                            {{ form_widget(form.phone, { 'attr': { 'class': 'form-control is-invalid' } }) }}
+                                            {{ form_label(form.phone) }}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(form.phone) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-12">

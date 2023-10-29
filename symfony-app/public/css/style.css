@@ -1238,3 +1238,12 @@ h6 {
     padding-top: 20px;
   }
 }
+
+.invalid-feedback ul {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.invalid-feedback li {
+  list-style-type: none;
+}
