@@ -29,14 +29,14 @@ class ProviderController extends AbstractController
         $providerTypeFilter = $request->query->get('providerType');
 
         $queryBuilder = $providerRepository->createQueryBuilder('p')
-            ->leftJoin('p.providerType', 'pt');
+            ->join('p.providerType', 'pt');
 
         if ($nameFilter) {
             $queryBuilder->andWhere('p.name LIKE :name')
                 ->setParameter('name', '%' . $nameFilter . '%');
         }
     
-        if ($activeFilter !== '') {
+        if ($activeFilter  !== ''  && $activeFilter !== null) {
             $queryBuilder->andWhere('p.active = :active')
                 ->setParameter('active', $activeFilter);
         }
