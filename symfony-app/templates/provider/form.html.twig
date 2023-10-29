@@ -38,7 +38,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form class="row g-3" method="POST">
+                            <form id="providerForm" class="row g-3" method="POST">
                                 <div class="col-md-10">
                                     <h5 class="card-title">{{ form.vars.data.id ? 'Editar' : 'Nuevo' }} proveedor</h5>
                                 </div>
@@ -129,9 +129,12 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        const providerForm = document.getElementById("providerForm");
         $('button[type=submit]').click(function () {
-            $(this).hide();
-            $('.submitting-button').show();
+            if (providerForm.checkValidity()) {
+                $(this).hide();
+                $('.submitting-button').show();
+            }
         });
     </script>
 {% endblock %}
