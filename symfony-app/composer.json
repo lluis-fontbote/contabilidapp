@@ -11,6 +11,7 @@
         "doctrine/orm": "^2.16",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^5.1",
+        "stof/doctrine-extensions-bundle": "*",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
@@ -26,6 +27,7 @@
         "symfony/property-access": "4.4.*",
         "symfony/property-info": "4.4.*",
         "symfony/security-bundle": "4.4.*",
+        "symfony/security-csrf": "4.4.*",
         "symfony/serializer": "4.4.*",
         "symfony/translation": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
@@ -37,6 +39,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
@@ -94,7 +97,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "4.4.*",
             "docker": true
         }

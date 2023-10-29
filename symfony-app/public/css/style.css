@@ -1231,3 +1231,10 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/* CUSTOM */
+@media(min-width:768px) {
+  .form-check.form-switch {
+    padding-top: 20px;
+  }
+}

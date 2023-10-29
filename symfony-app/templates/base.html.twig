@@ -5,7 +5,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <title>
             {% block title %}
-                App proveedores
+                Contabilidapp
             {% endblock %}
         </title>
         <meta content="" name="description">
@@ -28,6 +28,7 @@
             <link href="{{ asset('vendor/quill/quill.bubble.css') }}" rel="stylesheet">
             <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
             <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="{{ asset("vendor/toastr/toastr.min.css") }}">
 
             <!-- Template Main CSS File -->
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -54,9 +55,22 @@
                 <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
                 <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
                 <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+                <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+                <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
 
                 <!-- Template Main JS File -->
                 <script src="{{ asset('js/main.js') }}"></script>
+
+                {# read and display several types of flash messages #}
+                <script>
+                    $(document).ready(function() {
+                        {% for label, messages in app.flashes() %}
+                            {% for message in messages %}
+                                toastr.success("{{ message }}", "OK", {closeButton: true});
+                            {% endfor %}
+                        {% endfor %}
+                    });
+                </script>
             {% endblock %}
         {% endblock %}
     </body>
