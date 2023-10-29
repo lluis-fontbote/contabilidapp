@@ -139,4 +139,14 @@ class Provider
 
         return $this;
     }
+
+    public function getCreated_at(): string
+    {
+        return $this->created_at->format('d-m-Y');
+    }
+
+    public function getUpdated_at(): string
+    {
+        return $this->updated_at->format('d-m-Y');
+    }
 }

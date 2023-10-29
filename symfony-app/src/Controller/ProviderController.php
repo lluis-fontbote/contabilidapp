@@ -4,13 +4,39 @@ namespace App\Controller;
 
 use App\Entity\Provider;
 use App\Form\ProviderFormType;
+use App\Repository\ProviderRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProviderController extends AbstractController
 {
+    /**
+     * Returns the view of 
+     * 
+     * @Route("/", methods={"GET"}, name="home")
+     * @Route("/proveedores", methods={"GET"}, name="provider.index")
+     *
+     */
+    public function index(ProviderRepository $providerRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $queryBuilder = $providerRepository->createQueryBuilder('p')
+            ->leftJoin('p.providerType', 'pt');
+
+        $providers = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('provider/index.html.twig', [
+            'providers' => $providers,
+        ]);
+    }
+
     /**
      * Creates a new Provider.
      *
@@ -70,5 +96,42 @@ class ProviderController extends AbstractController
         return $this->render('provider/form.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Toggle the active state of a Provider.
+     *
+     * @Route("/proveedores/{id<\d+>}", methods={"PATCH"}, name="provider.toggle_status")
+     */
+    public function toggleActive(Provider $provider)
+    {
+        $provider->setActive(!$provider->isActive());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($provider);
+        $em->flush();
+
+        return new JsonResponse(['active' => $provider->isActive()]);
+    }
+
+    /**
+     * Deletes a Provider
+     *
+     * @Route("/proveedores/{id}/eliminar", methods={"POST"}, name="provider.delete")
+     */
+    public function delete(Request $request, Provider $provider): Response
+    {
+        if (!$this->isCsrfTokenValid('delete-provider', $request->request->get('token'))) {
+            $this->addFlash('error', 'No se pudo eliminar el proveedor');
+
+            return $this->redirectToRoute('provider.index');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($provider);
+        $em->flush();
+
+        $this->addFlash('success', 'Proveedor eliminado correctamente');
+
+        return $this->redirectToRoute('provider.index');
     }
 }

@@ -10,17 +10,17 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html">
+                        <a href="{{ path('provider.index') }}" title="Ir a Inicio">
                             Inicio
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="index.html">
+                        <a href="{{ path('provider.index') }}" title="Ir a Proveedores">
                             Proveedores
                         </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        {{ form.vars.data.id ? 'Editar' : 'Nuevo' }}
+                        Nuevo
                     </li>
                 </ol>
             </nav>

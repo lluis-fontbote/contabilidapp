@@ -1,0 +1,21 @@
+<div class="modal fade modal-danger text-start" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteCity" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title"><i data-feather='alert-triangle'></i> Borrar registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                Estás a punto de eliminar un registro <br><strong class="text-dark">Esta acción no se puede recuperar.</strong>
+             </div>
+             <form method="POST">
+                <input type="hidden" name="token" value="{{ csrf_token('delete-provider') }}">
+                <input type="hidden" name="id" id="delete_record_id">
+                <div class="modal-footer d-flex justify-content-between">
+                   <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Confirmar</button>
+                   <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+             </form>
+          </div>
+    </div>
+ </div>
